@@ -1,116 +1,219 @@
-// app.js
+/* =========================
+   Mazrae Shokolat - app.js
+   Static catalog + order payload builder
+   Rule: Ruby has no 10kg
+   ========================= */
 
-// 1) تاریخ امروز به فارسی (بدون کتابخانه)
-(function showTodayFa(){
-  try{
-    const el = document.getElementById("today-fa");
-    if(!el) return;
-    const fmt = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-      year:"numeric", month:"2-digit", day:"2-digit"
-    });
-    el.textContent = fmt.format(new Date());
-  } catch(e) {
-    // اگر مرورگر قدیمی بود
-    const el = document.getElementById("today-fa");
-    if(el) el.textContent = "امروز";
+/** 1) CONFIG */
+const GOOGLE_SCRIPT_WEBAPP_URL = ""; // بعداً لینک Web App گوگل اسکریپت را اینجا می‌گذاری
+
+/** 2) DOM */
+const orderForm = document.getElementById("orderForm");
+const productSelect = document.getElementById("productSelect");
+const weightSelect = document.getElementById("weightSelect");
+const qtyInput = document.getElementById("qtyInput");
+const formStatus = document.getElementById("formStatus");
+
+/** 3) DATA (Products / Labels / SKU) */
+const PRODUCTS = [
+  { sku: "CB-DARK", name: "شکلات کلبوت تلخ" },
+  { sku: "CB-MILK", name: "شکلات کلبوت شیری" },
+  { sku: "CB-WHITE", name: "شکلات کلبوت سفید" },
+  { sku: "CB-GOLD", name: "شکلات کلبوت گلد" },
+  { sku: "CB-RUBY", name: "شکلات کلبوت روبی" },
+  { sku: "CB-COCOABUTTER", name: "کره کاکائو بلژیکی" },
+];
+
+const PRODUCT_MAP = PRODUCTS.reduce((acc, p) => {
+  acc[p.sku] = p.name;
+  return acc;
+}, {});
+
+const WEIGHTS = [
+  { value: "1kg", label: "۱ کیلوگرم" },
+  { value: "2.5kg", label: "۲.۵ کیلوگرم" },
+  { value: "10kg", label: "۱۰ کیلوگرم" },
+];
+
+/** Optional: normalize digits (Persian/Arabic -> English) */
+function toEnglishDigits(str) {
+  return String(str || "")
+    .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+    .replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+}
+
+function setStatus(msg, type = "") {
+  if (!formStatus) return;
+  formStatus.textContent = msg || "";
+  formStatus.className = "status" + (type ? ` ${type}` : "");
+}
+
+function safeTrim(v) {
+  return String(v ?? "").trim();
+}
+
+function getNowISO() {
+  return new Date().toISOString();
+}
+
+/** 4) UI helpers */
+function applyWeightRules() {
+  if (!productSelect || !weightSelect) return;
+
+  const isRuby = productSelect.value === "CB-RUBY";
+
+  // find 10kg option
+  const opt10 = [...weightSelect.options].find(o => o.value === "10kg");
+  if (opt10) {
+    opt10.disabled = isRuby;
   }
-})();
 
-// 2) تنظیمات شما: این را بعداً با URL وب‌اپ گوگل اسکریپت پر می‌کنیم
-const GOOGLE_SCRIPT_WEBAPP_URL = ""; // مرحله بعد پر می‌شود
-
-function makeOrderId(){
-  // مثال: MF-14050307-8K2P
-  const d = new Date();
-  const stamp = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-    year:"2-digit", month:"2-digit", day:"2-digit"
-  }).format(d).replaceAll("/", "");
-  const rand = Math.random().toString(36).slice(2,6).toUpperCase();
-  return `MF-${stamp}-${rand}`;
+  // if ruby selected and currently 10kg, clear selection
+  if (isRuby && weightSelect.value === "10kg") {
+    weightSelect.value = "";
+  }
 }
 
-const form = document.getElementById("orderForm");
-const statusEl = document.getElementById("formStatus");
-const cancelBtn = document.getElementById("cancelBtn");
+/** If your HTML already has options, we don't have to populate them.
+    But in case it's empty, we populate nicely. */
+function maybePopulateSelects() {
+  if (productSelect && productSelect.options.length <= 1) {
+    // keep first placeholder option if exists
+    PRODUCTS.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p.sku;
+      opt.textContent = p.name;
+      productSelect.appendChild(opt);
+    });
+  }
 
-function setStatus(msg, type="info"){
-  statusEl.className = `status status--${type}`;
-  statusEl.textContent = msg;
+  if (weightSelect && weightSelect.options.length <= 1) {
+    WEIGHTS.forEach(w => {
+      const opt = document.createElement("option");
+      opt.value = w.value;
+      opt.textContent = w.label;
+      weightSelect.appendChild(opt);
+    });
+  }
 }
 
-if(cancelBtn){
-  cancelBtn.addEventListener("click", ()=>{
-    const last = localStorage.getItem("mf_last_order");
-    if(!last){
-      alert("هنوز سفارشی ثبت نشده. اگر می‌خواهی ویرایش/لغو کنی، ابتدا سفارش را ثبت کن.");
-      return;
-    }
-    const data = JSON.parse(last);
-    alert(
-      `برای لغو/ویرایش:\nکد سفارش: ${data.orderId}\nموبایل: ${data.mobile}\n\n(در فاز بعد، لغو خودکار و لینک امن اضافه می‌کنیم.)`
-    );
+/** 5) VALIDATION */
+function validateOrder(payload) {
+  const product = safeTrim(payload.product);
+  const weight = safeTrim(payload.weight);
+  const qtyRaw = safeTrim(payload.qty);
+
+  if (!product) return "لطفاً محصول را انتخاب کنید.";
+  if (!weight) return "لطفاً وزن را انتخاب کنید.";
+
+  // Ruby rule
+  if (product === "CB-RUBY" && weight === "10kg") {
+    return "برای شکلات روبی، وزن ۱۰ کیلوگرم موجود نیست.";
+  }
+
+  // qty
+  const qty = parseInt(toEnglishDigits(qtyRaw || "1"), 10);
+  if (!Number.isFinite(qty) || qty <= 0) return "تعداد معتبر نیست.";
+  if (qty > 999) return "تعداد خیلی زیاد است.";
+
+  return null;
+}
+
+/** 6) BUILD STANDARD ORDER DESCRIPTION (items) */
+function buildStandardItems(payload) {
+  const pName = PRODUCT_MAP[payload.product] || payload.product || "";
+  const weight = payload.weight || "";
+  const qty = payload.qty || "1";
+  return `${pName} | وزن: ${weight} | تعداد: ${qty}`;
+}
+
+/** 7) SEND (optional) */
+async function postToGoogleScript(payload) {
+  if (!GOOGLE_SCRIPT_WEBAPP_URL) {
+    // No backend configured yet
+    return { ok: true, mode: "local", message: "GOOGLE_SCRIPT_WEBAPP_URL ست نشده؛ فقط تست لوکال انجام شد." };
+  }
+
+  const res = await fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.ok === false) {
+    throw new Error(data.message || "ارسال ناموفق بود.");
+  }
+  return data;
+}
+
+/** 8) INIT */
+maybePopulateSelects();
+applyWeightRules();
+
+if (productSelect) {
+  productSelect.addEventListener("change", () => {
+    applyWeightRules();
   });
 }
 
-if(form){
-  form.addEventListener("submit", async (e)=>{
+/** 9) SUBMIT HANDLER */
+if (orderForm) {
+  orderForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    setStatus("");
 
-    const fd = new FormData(form);
+    // Build payload from form
+    const fd = new FormData(orderForm);
     const payload = Object.fromEntries(fd.entries());
 
-    // اعتبارسنجی ساده موبایل
-    const mobile = (payload.mobile || "").trim();
-    if(!/^09\d{9}$/.test(mobile)){
-      setStatus("شماره موبایل معتبر نیست (مثلاً 09123456789).", "error");
+    // Normalize a few fields
+    payload.product = safeTrim(payload.product);
+    payload.weight = safeTrim(payload.weight);
+    payload.qty = toEnglishDigits(safeTrim(payload.qty || (qtyInput ? qtyInput.value : "1"))) || "1";
+    payload.createdAt = getNowISO();
+
+    // Validation
+    const err = validateOrder(payload);
+    if (err) {
+      setStatus(err, "error");
       return;
     }
 
-    const orderId = makeOrderId();
-    payload.orderId = orderId;
-    payload.createdAtIso = new Date().toISOString();
-    payload.createdAtFa = (() => {
-      try{
-        return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-          year:"numeric", month:"2-digit", day:"2-digit",
-          hour:"2-digit", minute:"2-digit"
-        }).format(new Date());
-      }catch(e){ return ""; }
-    })();
+    // Standardized "items" string (THIS is the part you were stuck on)
+    payload.items = buildStandardItems(payload);
 
-    // ذخیره برای لغو/ویرایش دستی (فاز ۱)
-    localStorage.setItem("mf_last_order", JSON.stringify({orderId, mobile}));
+    // Optional: add readable product name too
+    payload.productName = PRODUCT_MAP[payload.product] || payload.product;
 
-    // اگر هنوز وب‌اپ را ست نکرده‌ای، فقط پیام بده
-    if(!GOOGLE_SCRIPT_WEBAPP_URL){
-      setStatus(`سفارش ثبت شد (محلی). کد سفارش شما: ${orderId}\n\nمرحله بعد: اتصال به Google Sheets برای ثبت واقعی.`, "ok");
-      form.reset();
-      return;
-    }
+    // Lock UI
+    const submitBtn = orderForm.querySelector('button[type="submit"], input[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
 
-    try{
-      setStatus("در حال ارسال سفارش...", "info");
+    setStatus("در حال ثبت سفارش...");
 
-      const res = await fetch(GOOGLE_SCRIPT_WEBAPP_URL, {
-        method: "POST",
-        mode: "cors",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(payload)
-      });
+    try {
+      // If you want a mode key for Apps Script routing:
+      payload.action = "createOrder";
 
-      if(!res.ok){
-        throw new Error("NETWORK_OR_SERVER_ERROR");
-      }
+      const out = await postToGoogleScript(payload);
 
-      const out = await res.json().catch(()=>({ok:true}));
-      if(out && out.ok === false){
-        throw new Error(out.error || "SERVER_ERROR");
-      }
+      // Success
+      setStatus("سفارش ثبت شد. به‌زودی برای هماهنگی با شما تماس می‌گیریم.", "success");
+      // You can reset the form if you want:
+      // orderForm.reset();
+      // applyWeightRules();
 
-      setStatus(`سفارش با موفقیت ثبت شد. کد سفارش: ${orderId}`, "ok");
-      form.reset();
-    } catch(err){
-      setStatus(`مشکل در ثبت سفارش. کد سفارش شما: ${orderId}\nلطفاً دوباره تلاش کنید یا با واتساپ تماس بگیرید.`, "error");
+      // Debug (optional)
+      console.log("Order sent:", payload);
+      console.log("Server response:", out);
+    } catch (ex) {
+      setStatus(ex.message || "خطا در ثبت سفارش", "error");
+      console.error(ex);
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
     }
   });
+} else {
+  console.warn("orderForm not found. Check index.html ids.");
 }
