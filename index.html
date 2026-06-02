@@ -148,87 +148,61 @@
     </div>
   </section>
 
-  <section id="order" class="section">
-    <div class="container">
-      <div class="section__head">
-        <h2>ثبت سفارش</h2>
-        <p class="muted">در فاز اول، سفارش شما ثبت می‌شود و برای هماهنگی نهایی با شما تماس می‌گیریم.</p>
+<section id="order" class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2>ثبت سفارش</h2>
+      <p class="muted">در فاز اول، سفارش شما ثبت می‌شود و برای هماهنگی نهایی با شما تماس می‌گیریم.</p>
+    </div>
+
+    <form id="orderForm" class="form">
+      <div class="form__row">
+        <input name="name" placeholder="نام و نام خانوادگی" required>
+        <input name="mobile" placeholder="شماره موبایل" required inputmode="tel">
       </div>
 
-     <form id="orderForm" class="form">
-  <div class="form__row">
-    <input name="name" placeholder="نام و نام خانوادگی" required>
-    <input name="mobile" placeholder="شماره موبایل" required inputmode="tel">
+      <div class="form__row">
+        <select name="orderType" required>
+          <option value="">نوع سفارش</option>
+          <option>خرید شخصی</option>
+          <option>سفارش قنادی/کافه (B2B)</option>
+          <option>سفارش سازمانی</option>
+        </select>
+
+        <select name="product" id="productSelect" required>
+          <option value="">انتخاب محصول</option>
+          <option value="CB-DARK">شکلات کلبوت تلخ</option>
+          <option value="CB-MILK">شکلات کلبوت شیری</option>
+          <option value="CB-WHITE">شکلات کلبوت سفید</option>
+          <option value="CB-GOLD">شکلات کلبوت گلد</option>
+          <option value="CB-RUBY">شکلات کلبوت روبی</option>
+          <option value="CB-COCOABUTTER">کره کاکائو بلژیکی</option>
+        </select>
+      </div>
+
+      <div class="form__row">
+        <select name="weight" id="weightSelect" required>
+          <option value="">انتخاب وزن</option>
+          <option value="1kg">۱ کیلویی</option>
+          <option value="2.5kg">۲.۵ کیلویی</option>
+          <option value="10kg">۱۰ کیلویی</option>
+        </select>
+
+        <input id="qtyInput" name="qty" type="number" min="1" value="1" required placeholder="تعداد">
+      </div>
+
+      <textarea name="notes" rows="5" placeholder="توضیحات (مثلاً شهر، روش ارسال، زمان موردنظر، فاکتور رسمی و...)"></textarea>
+
+      <div class="form__actions">
+        <button type="submit" class="btn">ثبت سفارش</button>
+        <button type="button" id="cancelBtn" class="btn btn--ghost">لغو / ویرایش</button>
+      </div>
+
+      <div id="formStatus" class="status"></div>
+    </form>
   </div>
+</section>
 
-  <div class="form__row">
-    <select name="orderType" required>
-      <option value="">نوع سفارش</option>
-      <option>خرید شخصی</option>
-      <option>سفارش قنادی/کافه (B2B)</option>
-      <option>سفارش سازمانی</option>
-    </select>
-
-    <select name="product" id="productSelect" required>
-      <option value="">انتخاب محصول</option>
-      <option value="CB-DARK">شکلات کلبوت تلخ</option>
-      <option value="CB-MILK">شکلات کلبوت شیری</option>
-      <option value="CB-WHITE">شکلات کلبوت سفید</option>
-      <option value="CB-GOLD">شکلات کلبوت گلد</option>
-      <option value="CB-RUBY">شکلات کلبوت روبی</option>
-      <option value="CB-COCOABUTTER">کره کاکائو بلژیکی</option>
-    </select>
-  </div>
-
-  <div class="form__row">
-    <select name="weight" id="weightSelect" required>
-      <option value="">انتخاب وزن</option>
-      <option value="1kg">۱ کیلویی</option>
-      <option value="2.5kg">۲.۵ کیلویی</option>
-      <option value="10kg">۱۰ کیلویی</option>
-    </select>
-
-    <input name="qty" type="number" min="1" value="1" required placeholder="تعداد">
-  </div>
-
-  <textarea name="notes" rows="5" placeholder="توضیحات (مثلاً شهر، روش ارسال، زمان موردنظر، فاکتور رسمی و...)"></textarea>
-
-  <div class="form__actions">
-    <button type="submit" class="btn">ثبت سفارش</button>
-    <button type="button" id="cancelBtn" class="btn btn--ghost">لغو / ویرایش</button>
-  </div>
-
-  <div id="formStatus" class="status"></div>
-</form>
-        <div class="form__row">
-          <input name="name" placeholder="نام و نام خانوادگی" required>
-          <input name="mobile" placeholder="شماره موبایل" required>
-        </div>
-
-        <div class="form__row">
-          <select name="orderType" required>
-            <option value="">نوع سفارش</option>
-            <option>خرید شخصی</option>
-            <option>هدیه</option>
-            <option>سفارش سازمانی</option>
-          </select>
-
-          <input name="items" placeholder="محصول مورد نظر" required>
-        </div>
-
-        <textarea name="notes" rows="5" placeholder="توضیحات سفارش"></textarea>
-
-        <div class="form__actions">
-          <button type="submit" class="btn">ثبت سفارش</button>
-          <button type="button" id="cancelBtn" class="btn btn--ghost">لغو / ویرایش</button>
-        </div>
-
-        <div id="formStatus" class="status"></div>
-      </form>
-    </div>
-  </section>
-
-  <section id="faq" class="section section--alt">
     <div class="container">
       <div class="section__head">
         <h2>سوالات متداول</h2>
@@ -268,3 +242,5 @@
   <script src="app.js"></script>
 </body>
 </html>
+
+این کل دستورات داخل index.html هست
