@@ -1,80 +1,75 @@
 body{
-font-family:Vazirmatn;
-margin:0;
-background:#f6f2ef;
-color:#3a2a28;
-}
 
-.header{
-background:#3a2a28;
+font-family: sans-serif;
+background:#111;
 color:white;
-padding:15px;
+margin:0;
+
 }
 
-.nav{
+header{
+
+background:#1a1a1a;
+padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 }
 
-.nav a{
-color:white;
+nav a{
+
+color:#d4a373;
 margin:10px;
 text-decoration:none;
+
 }
 
 .hero{
+
+padding:60px;
 text-align:center;
-padding:80px 20px;
-background:linear-gradient(45deg,#7b4b3a,#c08a6a);
-color:white;
+
 }
 
-.btn{
-background:#cfa38b;
-border:none;
-padding:12px 25px;
-border-radius:8px;
-cursor:pointer;
-}
+section{
 
-.section{
-padding:60px 20px;
-text-align:center;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-max-width:1000px;
-margin:auto;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-form{
-display:flex;
-flex-direction:column;
-gap:10px;
-max-width:400px;
-margin:auto;
-}
-
-input,select{
-padding:10px;
-border-radius:6px;
-border:1px solid #ddd;
-}
-
-footer{
-text-align:center;
 padding:40px;
-background:#3a2a28;
-color:white;
+
+}
+
+.product{
+
+background:#1f1f1f;
+padding:20px;
+margin:10px 0;
+border-radius:10px;
+
+}
+
+input,select,textarea{
+
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+
+}
+
+button{
+
+background:#d4a373;
+color:black;
+padding:12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+opacity:0.8;
+
 }
