@@ -1,196 +1,258 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مزرعه شکلات | Chocolate Farm</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        :root {
+            --primary: #8E6E53; /* نسکافه‌ای تیره */
+            --accent: #B87333;  /* مسی */
+            --light-gold: #E2C2B3; /* رز گلد روشن */
+            --dark: #1A1A1A;
+            --white: #FFFFFF;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
 
-<title>Mazrae Shokolat</title>
+        header {
+            background: linear-gradient(135deg, var(--dark), #2c1a10);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+        }
 
-<link rel="stylesheet" href="styles.css">
+        h1 { color: var(--accent); margin: 0; font-size: 2.5rem; }
+        .subtitle { color: var(--light-gold); font-size: 1rem; margin-top: 10px; }
 
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+
+        .price-notice {
+            background: rgba(184, 115, 51, 0.1);
+            border: 1px solid var(--accent);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--light-gold);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #252525;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card h3 { color: var(--light-gold); margin-top: 0; }
+        
+        .weight-tag {
+            display: inline-block;
+            background: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 3px;
+        }
+
+        .form-section {
+            background: #252525;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 1px solid var(--primary);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1A1A1A;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        button:hover { background: var(--primary); }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        .bale-link { color: var(--accent); text-decoration: none; font-weight: bold; }
+    </style>
 </head>
-
 <body>
 
 <header>
-
-<h1>مزرعه شکلات</h1>
-
-<nav>
-
-<a href="#products">محصولات</a>
-<a href="#account">حساب مشتری</a>
-<a href="#order">ثبت سفارش</a>
-
-</nav>
-
+    <h1>مزرعه شکلات</h1>
+    <div class="subtitle">تامین کننده تخصصی شکلات کلبوت بلژیک</div>
 </header>
 
-<section class="hero">
+<div class="container">
+    <div class="price-notice">
+        برای استعلام قیمت روز و موجودی دقیق، لطفاً با شماره <strong>09365930856</strong> تماس بگیرید یا در اپلیکیشن <strong>بله</strong> به ادمین پیام دهید.
+    </div>
 
-<h2>شکلات بلژیکی Callebaut</h2>
+    <div class="product-grid" id="products">
+        <!-- محصولات به صورت خودکار توسط JS اضافه می‌شوند -->
+    </div>
 
-<p>
-برای قیمت روز تماس بگیرید یا در بله پیام دهید
-</p>
+    <div class="form-section">
+        <h2 style="color: var(--accent)">ثبت پیش‌فارش / درخواست مشاوره</h2>
+        <form id="orderForm">
+            <input type="text" id="name" placeholder="نام و نام خانوادگی" required>
+            <input type="tel" id="mobile" placeholder="شماره موبایل" required>
+            
+            <select id="productSelect">
+                <option value="">انتخاب محصول...</option>
+            </select>
 
-</section>
+            <select id="weightSelect">
+                <option value="">انتخاب وزن...</option>
+            </select>
 
-<section id="products">
-
-<h2>محصولات</h2>
-
-<div class="product">
-
-<h3>Callebaut Dark 54.4%</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
+            <input type="number" id="qty" placeholder="تعداد" min="1" value="1">
+            <textarea id="notes" placeholder="توضیحات یا آدرس (ارسال تک‌بسته در تهران رایگان است)"></textarea>
+            
+            <button type="submit" id="submitBtn">ثبت درخواست</button>
+        </form>
+        <p id="statusMsg" style="text-align: center; margin-top: 15px;"></p>
+    </div>
 </div>
-
-<div class="product">
-
-<h3>Callebaut Dark 70%</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Callebaut Dark 38%</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Callebaut Dark 30%</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Callebaut Milk 33.6%</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Callebaut White 28%</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Callebaut Ruby</h3>
-<p>400g / 1kg / 2.5kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Callebaut Gold / Caramel</h3>
-<p>400g / 1kg / 2.5kg / 10kg</p>
-
-</div>
-
-<div class="product">
-
-<h3>Belgian Cocoa Butter</h3>
-<p>1kg / 2kg</p>
-
-</div>
-
-</section>
-
-<section id="account">
-
-<h2>حساب مشتری</h2>
-
-<div id="loginBox">
-
-<input type="text" id="mobileInput" placeholder="شماره موبایل">
-
-<button id="loginBtn">ورود</button>
-
-<p id="loginStatus"></p>
-
-</div>
-
-<div id="panel" style="display:none">
-
-<h3>پنل مشتری</h3>
-
-<p id="userMobile"></p>
-
-<button id="logoutBtn">خروج</button>
-
-<h3>سفارش های من</h3>
-
-<div id="ordersList"></div>
-
-</div>
-
-</section>
-
-<section id="order">
-
-<h2>ثبت سفارش</h2>
-
-<form id="orderForm">
-
-<input name="name" placeholder="نام">
-
-<input name="mobile" placeholder="موبایل">
-
-<select name="product">
-
-<option>Callebaut Dark 54.4%</option>
-<option>Callebaut Dark 70%</option>
-<option>Callebaut Dark 38%</option>
-<option>Callebaut Dark 30%</option>
-<option>Callebaut Milk 33.6%</option>
-<option>Callebaut White 28%</option>
-<option>Callebaut Ruby</option>
-<option>Callebaut Gold</option>
-<option>Belgian Cocoa Butter</option>
-
-</select>
-
-<select name="weight">
-
-<option>400g</option>
-<option>1kg</option>
-<option>2.5kg</option>
-<option>10kg</option>
-
-</select>
-
-<input name="qty" type="number" placeholder="تعداد">
-
-<textarea name="notes" placeholder="توضیحات"></textarea>
-
-<button type="submit">ارسال سفارش</button>
-
-</form>
-
-<p id="formStatus"></p>
-
-</section>
 
 <footer>
-
-<p>
-پشتیبانی: 09365930856
-</p>
-
+    <p>شماره پشتیبانی: 09365930856</p>
+    <p>ارتباط در بله: <a href="#" class="bale-link">@ChocolateFarm_Admin</a></p>
+    <p>© ۲۰۲۶ مزرعه شکلات - تمامی حقوق محفوظ است</p>
 </footer>
 
-<script src="app.js"></script>
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwQTcpP8FEbpSIQ-UgrTqXfGGWQJ5pAgkVkhY6hZOvLSXZKQwlurOqmASTHzs0qbDJI1Q/exec";
+
+    const products = [
+        { name: "کلبوت تلخ 54.4%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
+        { name: "کلبوت تلخ 70% / 30% / 38%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
+        { name: "کلبوت شیری 33.6%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
+        { name: "کلبوت سفید 28%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
+        { name: "کلبوت روبی (Ruby)", weights: ["400g", "1kg", "2.5kg"] },
+        { name: "کلبوت گلد / کاراملی", weights: ["400g", "1kg", "2.5kg", "10kg"] }
+    ];
+
+    // رندر محصولات
+    const grid = document.getElementById('products');
+    const pSelect = document.getElementById('productSelect');
+    
+    products.forEach(p => {
+        // ایجاد کارت
+        let card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>${p.name}</h3>` + p.weights.map(w => `<span class="weight-tag">${w}</span>`).join('');
+        grid.appendChild(card);
+
+        // افزودن به لیست فرم
+        let opt = document.createElement('option');
+        opt.value = p.name;
+        opt.textContent = p.name;
+        pSelect.appendChild(opt);
+    });
+
+    // آپدیت وزن‌ها در فرم
+    pSelect.onchange = () => {
+        const wSelect = document.getElementById('weightSelect');
+        wSelect.innerHTML = '<option value="">انتخاب وزن...</option>';
+        const selected = products.find(p => p.name === pSelect.value);
+        if(selected) {
+            selected.weights.forEach(w => {
+                let opt = document.createElement('option');
+                opt.value = w;
+                opt.textContent = w;
+                wSelect.appendChild(opt);
+            });
+        }
+    };
+
+    // ثبت فرم
+    document.getElementById('orderForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('statusMsg');
+        
+        // چک کردن روز جمعه
+        const today = new Date().getDay();
+        if(today === 5) { // 5 در جاوااسکریپت یعنی جمعه
+            alert("ملیکا جان، امروز جمعه است و ارسالی نداریم. سفارش شما ثبت می‌شود و روز شنبه پردازش خواهد شد.");
+        }
+
+        btn.disabled = true;
+        btn.textContent = "در حال ارسال...";
+
+        const data = {
+            action: "order",
+            name: document.getElementById('name').value,
+            mobile: document.getElementById('mobile').value,
+            product: document.getElementById('productSelect').value,
+            weight: document.getElementById('weightSelect').value,
+            qty: document.getElementById('qty').value,
+            notes: document.getElementById('notes').value
+        };
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            
+            if(result.status === "saved") {
+                msg.style.color = "#4CAF50";
+                msg.textContent = `سفارش با موفقیت ثبت شد. شماره پیگیری: ${result.order_id}`;
+                if(result.vip) alert("تبریک! شما جزو مشتریان VIP (بالای ۵۰ کیلو) هستید. ارسال شما کاملاً رایگان است.");
+                document.getElementById('orderForm').reset();
+            } else {
+                msg.textContent = "خطا در ثبت. دوباره تلاش کنید.";
+            }
+        } catch (error) {
+            msg.textContent = "خطا در اتصال به سرور.";
+        }
+        
+        btn.disabled = false;
+        btn.textContent = "ثبت درخواست";
+    };
+</script>
 
 </body>
 </html>
