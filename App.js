@@ -1,46 +1,113 @@
-document.addEventListener("DOMContentLoaded", () => {
+const API = "https://script.google.com/macros/s/AKfycbzMK5jdiMKk9oauRjMtPiMyFDiLS1RXwlXZcO8NwfnuX9PviFYRiBXeLXPdpzWpS7xZ-Q/exec"
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzMK5jdiMKk9oauRjMtPiMyFDiLS1RXwlXZcO8NwfnuX9PviFYRiBXeLXPdpzWpS7xZ-Q/exec"
+const loginBtn = document.getElementById("loginBtn")
+const mobileInput = document.getElementById("mobileInput")
+const loginStatus = document.getElementById("loginStatus")
+
+const panel = document.getElementById("panel")
+const loginBox = document.getElementById("loginBox")
+
+const userMobile = document.getElementById("userMobile")
+const logoutBtn = document.getElementById("logoutBtn")
+
+const ordersList = document.getElementById("ordersList")
 
 const form = document.getElementById("orderForm")
-const status = document.getElementById("formStatus")
+const formStatus = document.getElementById("formStatus")
+
+const savedMobile = localStorage.getItem("customerMobile")
+
+if(savedMobile){
+
+showPanel(savedMobile)
+loadOrders(savedMobile)
+
+}
+
+loginBtn.addEventListener("click", async ()=>{
+
+const mobile = mobileInput.value.trim()
+
+loginStatus.innerText="در حال ورود..."
+
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"login",
+mobile:mobile
+})
+})
+
+localStorage.setItem("customerMobile",mobile)
+
+showPanel(mobile)
+
+loadOrders(mobile)
+
+})
+
+function showPanel(mobile){
+
+loginBox.style.display="none"
+panel.style.display="block"
+
+userMobile.innerText="شماره شما: "+mobile
+
+}
+
+logoutBtn.addEventListener("click",()=>{
+
+localStorage.removeItem("customerMobile")
+
+location.reload()
+
+})
+
+async function loadOrders(mobile){
+
+const res = await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"getOrders",
+mobile:mobile
+})
+})
+
+const orders = await res.json()
+
+ordersList.innerHTML=""
+
+orders.forEach(o=>{
+
+const div=document.createElement("div")
+
+div.innerHTML=`${o.product} | ${o.weight} | ${o.qty}`
+
+ordersList.appendChild(div)
+
+})
+
+}
 
 form.addEventListener("submit", async function(e){
 
 e.preventDefault()
 
-const fd = new FormData(form)
+const fd=new FormData(form)
 
-const data = Object.fromEntries(fd.entries())
+const data=Object.fromEntries(fd.entries())
 
-status.innerText = "در حال ثبت سفارش..."
+data.action="order"
 
-try{
+formStatus.innerText="در حال ارسال..."
 
-const res = await fetch(API_URL,{
+await fetch(API,{
 method:"POST",
 body:JSON.stringify(data)
 })
 
-const result = await res.json()
+formStatus.innerText="سفارش ثبت شد"
 
-if(result.result === "success"){
-
-status.innerText = "✅ سفارش شما ثبت شد"
 form.reset()
-
-}else{
-
-status.innerText = "خطا در ثبت سفارش"
-
-}
-
-}catch(err){
-
-status.innerText = "ارتباط با سرور برقرار نشد"
-
-}
-
-})
 
 })
