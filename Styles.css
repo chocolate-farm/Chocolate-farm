@@ -183,3 +183,27 @@ a {
   border-radius: 18px;
   background: linear-gradient(135deg, #4d2f21, #1b100d);
   margin-bottom
+.status{
+margin-top:15px;
+padding:12px;
+border-radius:8px;
+font-size:14px;
+}
+
+.status--success{
+background:#e6f9f0;
+color:#0a7a4b;
+border:1px solid #b6efd5;
+}
+
+.status--error{
+background:#fdeaea;
+color:#b42318;
+border:1px solid #f5b5b5;
+}
+
+.status--info{
+background:#eef4ff;
+color:#1d4ed8;
+border:1px solid #c7d7ff;
+}
