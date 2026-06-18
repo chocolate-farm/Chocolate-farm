@@ -6,128 +6,163 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>مزرعه شکلات</title>
+<title>Mazrae Shokolat</title>
 
 <link rel="stylesheet" href="styles.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<header class="header">
+<header>
 
-<div class="container nav">
-
-<h2>مزرعه شکلات</h2>
+<h1>مزرعه شکلات</h1>
 
 <nav>
 
 <a href="#products">محصولات</a>
-<a href="#articles">مقالات شکلات سازی</a>
-<a href="#recipes">دستورها</a>
+<a href="#account">حساب مشتری</a>
 <a href="#order">ثبت سفارش</a>
 
 </nav>
 
-</div>
-
 </header>
-
 
 <section class="hero">
 
-<h1>تامین تخصصی شکلات کلبوت بلژیک</h1>
+<h2>شکلات بلژیکی Callebaut</h2>
 
-<p>عرضه شکلات برای قنادی‌ها، کافه‌ها و تولیدکنندگان دسر</p>
-
-<p class="price-note">برای قیمت روز تماس بگیرید یا در بله پیام دهید</p>
-
-<a class="btn" href="#order">ثبت سفارش</a>
+<p>
+برای قیمت روز تماس بگیرید یا در بله پیام دهید
+</p>
 
 </section>
 
-
-<section id="products" class="section">
+<section id="products">
 
 <h2>محصولات</h2>
 
-<div class="grid">
+<div class="product">
 
-<div class="card">
-<h3>کلبوت تلخ 54.4%</h3>
+<h3>Callebaut Dark 54.4%</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت تلخ 70%</h3>
+<div class="product">
+
+<h3>Callebaut Dark 70%</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت تلخ 30%</h3>
+<div class="product">
+
+<h3>Callebaut Dark 38%</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت تلخ 38%</h3>
+<div class="product">
+
+<h3>Callebaut Dark 30%</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت شیری 33.6%</h3>
+<div class="product">
+
+<h3>Callebaut Milk 33.6%</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت سفید 28%</h3>
+<div class="product">
+
+<h3>Callebaut White 28%</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت روبی</h3>
+<div class="product">
+
+<h3>Callebaut Ruby</h3>
 <p>400g / 1kg / 2.5kg</p>
+
 </div>
 
-<div class="card">
-<h3>کلبوت گلد / کاراملی</h3>
+<div class="product">
+
+<h3>Callebaut Gold / Caramel</h3>
 <p>400g / 1kg / 2.5kg / 10kg</p>
+
 </div>
+
+<div class="product">
+
+<h3>Belgian Cocoa Butter</h3>
+<p>1kg / 2kg</p>
 
 </div>
 
 </section>
 
+<section id="account">
 
-<section id="order" class="section">
+<h2>حساب مشتری</h2>
+
+<div id="loginBox">
+
+<input type="text" id="mobileInput" placeholder="شماره موبایل">
+
+<button id="loginBtn">ورود</button>
+
+<p id="loginStatus"></p>
+
+</div>
+
+<div id="panel" style="display:none">
+
+<h3>پنل مشتری</h3>
+
+<p id="userMobile"></p>
+
+<button id="logoutBtn">خروج</button>
+
+<h3>سفارش های من</h3>
+
+<div id="ordersList"></div>
+
+</div>
+
+</section>
+
+<section id="order">
 
 <h2>ثبت سفارش</h2>
 
 <form id="orderForm">
 
-<input type="text" name="name" placeholder="نام" required>
+<input name="name" placeholder="نام">
 
-<input type="tel" name="mobile" placeholder="شماره موبایل" required>
+<input name="mobile" placeholder="موبایل">
 
-<select name="product" required>
+<select name="product">
 
-<option value="">انتخاب محصول</option>
-
-<option>کلبوت تلخ 54.4%</option>
-<option>کلبوت تلخ 70%</option>
-<option>کلبوت تلخ 30%</option>
-<option>کلبوت تلخ 38%</option>
-<option>کلبوت شیری 33.6%</option>
-<option>کلبوت سفید 28%</option>
-<option>کلبوت روبی</option>
-<option>کلبوت گلد</option>
+<option>Callebaut Dark 54.4%</option>
+<option>Callebaut Dark 70%</option>
+<option>Callebaut Dark 38%</option>
+<option>Callebaut Dark 30%</option>
+<option>Callebaut Milk 33.6%</option>
+<option>Callebaut White 28%</option>
+<option>Callebaut Ruby</option>
+<option>Callebaut Gold</option>
+<option>Belgian Cocoa Butter</option>
 
 </select>
 
-<select name="weight" required>
+<select name="weight">
 
-<option value="">وزن</option>
 <option>400g</option>
 <option>1kg</option>
 <option>2.5kg</option>
@@ -135,81 +170,25 @@
 
 </select>
 
-<input type="number" name="qty" placeholder="تعداد" required>
+<input name="qty" type="number" placeholder="تعداد">
 
-<input type="date" name="date" id="dateInput" required>
+<textarea name="notes" placeholder="توضیحات"></textarea>
 
-<button class="btn">ثبت سفارش</button>
+<button type="submit">ارسال سفارش</button>
 
 </form>
 
-<p class="shipping">
-
-ارسال تک بسته در تهران رایگان است.  
-ارسال سفارش عمده بالای 50 کیلو در ماه در تهران رایگان است.
-
-</p>
+<p id="formStatus"></p>
 
 </section>
-
-
-<section id="articles" class="section">
-
-<h2>مقالات علم شکلات سازی</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>تمپرینگ شکلات چیست؟</h3>
-<p>آشنایی با کریستال های کره کاکائو</p>
-</div>
-
-<div class="card">
-<h3>تفاوت شکلات واقعی و کامپاند</h3>
-<p>راهنمای انتخاب شکلات حرفه‌ای</p>
-</div>
-
-<div class="card">
-<h3>کاربرد کره کاکائو</h3>
-<p>تنظیم ویسکوزیته شکلات</p>
-</div>
-
-</div>
-
-</section>
-
-
-<section id="recipes" class="section">
-
-<h2>دسر و فیلینگ های کاربردی</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>گاناش کلاسیک</h3>
-</div>
-
-<div class="card">
-<h3>فیلینگ فندق شکلاتی</h3>
-</div>
-
-<div class="card">
-<h3>موس شکلات</h3>
-</div>
-
-</div>
-
-</section>
-
 
 <footer>
 
-<p>پشتیبانی: 09365930856</p>
-
-<p>ارتباط از طریق پیام در اپلیکیشن بله</p>
+<p>
+پشتیبانی: 09365930856
+</p>
 
 </footer>
-
 
 <script src="app.js"></script>
 
