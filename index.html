@@ -7,252 +7,154 @@
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
         :root {
-            --primary: #8E6E53; /* نسکافه‌ای تیره */
+            --primary: #8E6E53; /* نسکافه‌ای */
             --accent: #B87333;  /* مسی */
-            --light-gold: #E2C2B3; /* رز گلد روشن */
-            --dark: #1A1A1A;
-            --white: #FFFFFF;
+            --gold: #D4AF37;
+            --dark-bg: #121212;
+            --card-bg: #1E1E1E;
+            --text-light: #E0E0E0;
         }
 
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: var(--dark);
-            color: var(--white);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+        body { font-family: 'Vazirmatn', sans-serif; background-color: var(--dark-bg); color: var(--text-light); margin: 0; scroll-behavior: smooth; }
 
-        header {
-            background: linear-gradient(135deg, var(--dark), #2c1a10);
-            padding: 40px 20px;
+        /* --- Hero Section --- */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1548907040-4baa42d10919?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 3px solid var(--accent);
         }
+        .hero h1 { font-size: 3.5rem; color: var(--accent); margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.2rem; max-width: 600px; color: var(--gold); }
 
-        h1 { color: var(--accent); margin: 0; font-size: 2.5rem; }
-        .subtitle { color: var(--light-gold); font-size: 1rem; margin-top: 10px; }
+        .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
 
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        /* --- Tabs & Categories --- */
+        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .tab-btn { background: none; border: 1px solid var(--primary); color: var(--text-light); padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: var(--accent); border-color: var(--accent); }
 
-        .price-notice {
-            background: rgba(184, 115, 51, 0.1);
-            border: 1px solid var(--accent);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--light-gold);
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: #252525;
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 12px;
-            transition: 0.3s;
-        }
-
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card h3 { color: var(--light-gold); margin-top: 0; }
+        /* --- Product Grid --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .card h3 { color: var(--accent); margin: 0 0 10px 0; }
         
-        .weight-tag {
-            display: inline-block;
-            background: var(--primary);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            margin: 3px;
-        }
+        /* --- Blog & Recipe Section --- */
+        .section-title { text-align: center; margin: 60px 0 40px; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px; width: 100%; }
 
-        .form-section {
-            background: #252525;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 40px;
-            border: 1px solid var(--primary);
-        }
+        /* --- Footer & Contact --- */
+        footer { background: #0a0a0a; padding: 50px 20px; text-align: center; margin-top: 100px; border-top: 1px solid var(--accent); }
+        .bale-btn { display: inline-block; background: #0088cc; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; margin-top: 20px; }
 
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #1A1A1A;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        button:hover { background: var(--primary); }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            margin-top: 50px;
-            border-top: 1px solid #333;
-            color: #888;
-        }
-
-        .bale-link { color: var(--accent); text-decoration: none; font-weight: bold; }
+        /* --- Admin Panel --- */
+        #adminSection { display: none; background: #252525; padding: 20px; border-radius: 10px; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-<header>
+<section class="hero">
     <h1>مزرعه شکلات</h1>
-    <div class="subtitle">تامین کننده تخصصی شکلات کلبوت بلژیک</div>
-</header>
+    <p>تأمین‌کننده مستقیم شکلات‌های حرفه‌ای کلبوت بلژیک و مواد اولیه قنادی لوکس</p>
+    <a href="#products" class="tab-btn active" style="margin-top: 20px; text-decoration: none;">مشاهده محصولات</a>
+</section>
 
-<div class="container">
-    <div class="price-notice">
-        برای استعلام قیمت روز و موجودی دقیق، لطفاً با شماره <strong>09365930856</strong> تماس بگیرید یا در اپلیکیشن <strong>بله</strong> به ادمین پیام دهید.
+<div class="container" id="products">
+    <h2 class="section-title">ویترین محصولات</h2>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="filterItems('all')">همه</button>
+        <button class="tab-btn" onclick="filterItems('chocolate')">شکلات بلژیکی</button>
+        <button class="tab-btn" onclick="filterItems('raw')">مواد اولیه</button>
     </div>
 
-    <div class="product-grid" id="products">
-        <!-- محصولات به صورت خودکار توسط JS اضافه می‌شوند -->
+    <div class="grid" id="productGrid">
+        <!-- محصولات توسط JS لود می‌شوند -->
     </div>
 
-    <div class="form-section">
-        <h2 style="color: var(--accent)">ثبت پیش‌فارش / درخواست مشاوره</h2>
-        <form id="orderForm">
-            <input type="text" id="name" placeholder="نام و نام خانوادگی" required>
-            <input type="tel" id="mobile" placeholder="شماره موبایل" required>
-            
-            <select id="productSelect">
-                <option value="">انتخاب محصول...</option>
-            </select>
-
-            <select id="weightSelect">
-                <option value="">انتخاب وزن...</option>
-            </select>
-
-            <input type="number" id="qty" placeholder="تعداد" min="1" value="1">
-            <textarea id="notes" placeholder="توضیحات یا آدرس (ارسال تک‌بسته در تهران رایگان است)"></textarea>
-            
-            <button type="submit" id="submitBtn">ثبت درخواست</button>
-        </form>
-        <p id="statusMsg" style="text-align: center; margin-top: 15px;"></p>
+    <h2 class="section-title">آموزش و رسپی</h2>
+    <div class="grid" id="recipeGrid">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=60" alt="Recipe">
+            <div class="card-content">
+                <h3>تمپر کردن شکلات</h3>
+                <p>آموزش اصولی تمپر کردن شکلات کلبوت برای براقیت نهایی...</p>
+                <small>⏱ ۵ دقیقه مطالعه</small>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=500&q=60" alt="Recipe">
+            <div class="card-content">
+                <h3>گاناش حرفه‌ای</h3>
+                <p>طرز تهیه گاناش با نسبت طلایی برای فیلینگ کیک...</p>
+                <small>🎬 همراه با ویدیو</small>
+            </div>
+        </div>
     </div>
 </div>
 
 <footer>
-    <p>شماره پشتیبانی: 09365930856</p>
-    <p>ارتباط در بله: <a href="#" class="bale-link">@ChocolateFarm_Admin</a></p>
-    <p>© ۲۰۲۶ مزرعه شکلات - تمامی حقوق محفوظ است</p>
+    <p>ملیکا جان، برای مدیریت سفارش‌ها و چت با ادمین:</p>
+    <a href="https://ble.ir/ChocolateFarm_Admin" target="_blank" class="bale-btn">ارتباط در بله (کلیک کنید)</a>
+    <br><br>
+    <small onclick="showAdminPrompt()" style="cursor: pointer; color: #444;">پنل مدیریت</small>
+    
+    <div id="adminSection">
+        <h3>پنل مدیریت سفارشات</h3>
+        <p>در حال اتصال به Google Sheets...</p>
+        <button onclick="window.open('https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit', '_blank')" class="tab-btn">باز کردن لیست سفارشات</button>
+    </div>
 </footer>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwQTcpP8FEbpSIQ-UgrTqXfGGWQJ5pAgkVkhY6hZOvLSXZKQwlurOqmASTHzs0qbDJI1Q/exec";
-
     const products = [
-        { name: "کلبوت تلخ 54.4%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
-        { name: "کلبوت تلخ 70% / 30% / 38%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
-        { name: "کلبوت شیری 33.6%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
-        { name: "کلبوت سفید 28%", weights: ["400g", "1kg", "2.5kg", "10kg"] },
-        { name: "کلبوت روبی (Ruby)", weights: ["400g", "1kg", "2.5kg"] },
-        { name: "کلبوت گلد / کاراملی", weights: ["400g", "1kg", "2.5kg", "10kg"] }
+        { id: 1, name: "کلبوت تلخ 54.4%", cat: "chocolate", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400" },
+        { id: 2, name: "کلبوت سفید 28%", cat: "chocolate", img: "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400" },
+        { id: 3, name: "پودر کاکائو کارگیل", cat: "raw", img: "https://images.unsplash.com/photo-1599600311303-91595300063c?w=400" }
     ];
 
-    // رندر محصولات
-    const grid = document.getElementById('products');
-    const pSelect = document.getElementById('productSelect');
-    
-    products.forEach(p => {
-        // ایجاد کارت
-        let card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `<h3>${p.name}</h3>` + p.weights.map(w => `<span class="weight-tag">${w}</span>`).join('');
-        grid.appendChild(card);
-
-        // افزودن به لیست فرم
-        let opt = document.createElement('option');
-        opt.value = p.name;
-        opt.textContent = p.name;
-        pSelect.appendChild(opt);
-    });
-
-    // آپدیت وزن‌ها در فرم
-    pSelect.onchange = () => {
-        const wSelect = document.getElementById('weightSelect');
-        wSelect.innerHTML = '<option value="">انتخاب وزن...</option>';
-        const selected = products.find(p => p.name === pSelect.value);
-        if(selected) {
-            selected.weights.forEach(w => {
-                let opt = document.createElement('option');
-                opt.value = w;
-                opt.textContent = w;
-                wSelect.appendChild(opt);
-            });
-        }
-    };
-
-    // ثبت فرم
-    document.getElementById('orderForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const msg = document.getElementById('statusMsg');
-        
-        // چک کردن روز جمعه
-        const today = new Date().getDay();
-        if(today === 5) { // 5 در جاوااسکریپت یعنی جمعه
-            alert("ملیکا جان، امروز جمعه است و ارسالی نداریم. سفارش شما ثبت می‌شود و روز شنبه پردازش خواهد شد.");
-        }
-
-        btn.disabled = true;
-        btn.textContent = "در حال ارسال...";
-
-        const data = {
-            action: "order",
-            name: document.getElementById('name').value,
-            mobile: document.getElementById('mobile').value,
-            product: document.getElementById('productSelect').value,
-            weight: document.getElementById('weightSelect').value,
-            qty: document.getElementById('qty').value,
-            notes: document.getElementById('notes').value
-        };
-
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify(data)
-            });
-            const result = await response.json();
-            
-            if(result.status === "saved") {
-                msg.style.color = "#4CAF50";
-                msg.textContent = `سفارش با موفقیت ثبت شد. شماره پیگیری: ${result.order_id}`;
-                if(result.vip) alert("تبریک! شما جزو مشتریان VIP (بالای ۵۰ کیلو) هستید. ارسال شما کاملاً رایگان است.");
-                document.getElementById('orderForm').reset();
-            } else {
-                msg.textContent = "خطا در ثبت. دوباره تلاش کنید.";
+    function renderProducts(filter) {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = '';
+        products.forEach(p => {
+            if(filter === 'all' || p.cat === filter) {
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${p.img}" alt="${p.name}">
+                        <div class="card-content">
+                            <h3>${p.name}</h3>
+                            <button class="tab-btn" onclick="alert('فرم سفارش در پایین صفحه فعال است')">جزئیات و خرید</button>
+                        </div>
+                    </div>
+                `;
             }
-        } catch (error) {
-            msg.textContent = "خطا در اتصال به سرور.";
-        }
-        
-        btn.disabled = false;
-        btn.textContent = "ثبت درخواست";
-    };
-</script>
+        });
+    }
 
+    function filterItems(cat) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        renderProducts(cat);
+    }
+
+    function showAdminPrompt() {
+        const pass = prompt("رمز ورود مدیر را وارد کنید:");
+        if(pass === "1234") { // رمز موقت شما
+            document.getElementById('adminSection').style.display = 'block';
+            window.scrollTo(0, document.body.scrollHeight);
+        } else {
+            alert("رمز اشتباه است.");
+        }
+    }
+
+    renderProducts('all');
+</script>
 </body>
 </html>
