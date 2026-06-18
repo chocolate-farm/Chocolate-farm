@@ -1,41 +1,46 @@
-const form=document.getElementById("orderForm")
-const dateInput=document.getElementById("dateInput")
+document.addEventListener("DOMContentLoaded", () => {
 
-const holidays=[
-"2026-03-21",
-"2026-03-22"
-]
+const API_URL = "https://script.google.com/macros/s/AKfycbzMK5jdiMKk9oauRjMtPiMyFDiLS1RXwlXZcO8NwfnuX9PviFYRiBXeLXPdpzWpS7xZ-Q/exec"
 
-dateInput.addEventListener("input",()=>{
+const form = document.getElementById("orderForm")
+const status = document.getElementById("formStatus")
 
-const d=new Date(dateInput.value)
+form.addEventListener("submit", async function(e){
 
-const day=d.getDay()
+e.preventDefault()
 
-if(day===5){
+const fd = new FormData(form)
 
-alert("ارسال در روز جمعه انجام نمی‌شود")
-dateInput.value=""
+const data = Object.fromEntries(fd.entries())
+
+status.innerText = "در حال ثبت سفارش..."
+
+try{
+
+const res = await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify(data)
+})
+
+const result = await res.json()
+
+if(result.result === "success"){
+
+status.innerText = "✅ سفارش شما ثبت شد"
+form.reset()
+
+}else{
+
+status.innerText = "خطا در ثبت سفارش"
 
 }
 
-if(holidays.includes(dateInput.value)){
+}catch(err){
 
-alert("این روز تعطیل رسمی است")
-
-dateInput.value=""
+status.innerText = "ارتباط با سرور برقرار نشد"
 
 }
 
 })
-
-
-form.addEventListener("submit",e=>{
-
-e.preventDefault()
-
-alert("سفارش ثبت شد. تیم فروش با شما تماس می‌گیرد.")
-
-form.reset()
 
 })
