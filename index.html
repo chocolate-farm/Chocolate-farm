@@ -7,117 +7,126 @@
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
         :root {
-            --primary: #8E6E53; /* نسکافه‌ای */
-            --accent: #B87333;  /* مسی */
-            --gold: #D4AF37;
-            --dark-bg: #121212;
-            --card-bg: #1E1E1E;
-            --text-light: #E0E0E0;
+            --primary: #8E6E53; --accent: #B87333; --gold: #D4AF37;
+            --dark-bg: #121212; --card-bg: #1E1E1E; --text-light: #E0E0E0;
         }
 
         body { font-family: 'Vazirmatn', sans-serif; background-color: var(--dark-bg); color: var(--text-light); margin: 0; scroll-behavior: smooth; }
-
-        /* --- Hero Section --- */
+        
+        /* Hero Section */
         .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1548907040-4baa42d10919?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             border-bottom: 3px solid var(--accent);
         }
-        .hero h1 { font-size: 3.5rem; color: var(--accent); margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.2rem; max-width: 600px; color: var(--gold); }
+        .hero h1 { font-size: 3rem; color: var(--accent); margin: 0; }
 
-        .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+        .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
 
-        /* --- Tabs & Categories --- */
-        .tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
-        .tab-btn { background: none; border: 1px solid var(--primary); color: var(--text-light); padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: 0.3s; }
+        /* Tabs & Grid */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab-btn { background: none; border: 1px solid var(--primary); color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; }
         .tab-btn.active { background: var(--accent); border-color: var(--accent); }
 
-        /* --- Product Grid --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-content { padding: 20px; }
-        .card h3 { color: var(--accent); margin: 0 0 10px 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card-body { padding: 15px; }
+        .card h3 { color: var(--gold); margin: 0 0 10px 0; font-size: 1.1rem; }
         
-        /* --- Blog & Recipe Section --- */
-        .section-title { text-align: center; margin: 60px 0 40px; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px; width: 100%; }
+        .buy-btn { background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
 
-        /* --- Footer & Contact --- */
-        footer { background: #0a0a0a; padding: 50px 20px; text-align: center; margin-top: 100px; border-top: 1px solid var(--accent); }
-        .bale-btn { display: inline-block; background: #0088cc; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; margin-top: 20px; }
+        /* Modal (Form) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+        .modal-content { background: #252525; margin: 5% auto; padding: 25px; width: 90%; max-width: 500px; border-radius: 15px; border: 1px solid var(--accent); position: relative; }
+        .close { position: absolute; left: 20px; top: 10px; font-size: 28px; cursor: pointer; color: var(--accent); }
+        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #121212; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
 
-        /* --- Admin Panel --- */
-        #adminSection { display: none; background: #252525; padding: 20px; border-radius: 10px; margin-top: 30px; }
+        /* Sections */
+        .section-title { text-align: right; color: var(--accent); border-right: 4px solid var(--accent); padding-right: 15px; margin: 50px 0 25px; }
+        .article-body { font-size: 0.9rem; color: #bbb; line-height: 1.8; }
+
+        footer { background: #0a0a0a; padding: 40px; text-align: center; border-top: 1px solid var(--accent); margin-top: 50px; }
+        .bale-link { display: inline-block; background: #0088cc; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <section class="hero">
     <h1>مزرعه شکلات</h1>
-    <p>تأمین‌کننده مستقیم شکلات‌های حرفه‌ای کلبوت بلژیک و مواد اولیه قنادی لوکس</p>
-    <a href="#products" class="tab-btn active" style="margin-top: 20px; text-decoration: none;">مشاهده محصولات</a>
+    <p>تأمین تخصصی شکلات کالبوت بلژیک برای قنادان حرفه‌ای</p>
 </section>
 
-<div class="container" id="products">
+<div class="container">
+    <!-- بخش محصولات -->
     <h2 class="section-title">ویترین محصولات</h2>
     <div class="tabs">
-        <button class="tab-btn active" onclick="filterItems('all')">همه</button>
-        <button class="tab-btn" onclick="filterItems('chocolate')">شکلات بلژیکی</button>
-        <button class="tab-btn" onclick="filterItems('raw')">مواد اولیه</button>
+        <button class="tab-btn active" onclick="filterItems('all')">همه محصولات</button>
+        <button class="tab-btn" onclick="filterItems('dark')">تلخ</button>
+        <button class="tab-btn" onclick="filterItems('milk-white')">شیری و سفید</button>
+        <button class="tab-btn" onclick="filterItems('special')">روبی و گلد</button>
     </div>
+    <div class="grid" id="productGrid"></div>
 
-    <div class="grid" id="productGrid">
-        <!-- محصولات توسط JS لود می‌شوند -->
-    </div>
-
-    <h2 class="section-title">آموزش و رسپی</h2>
-    <div class="grid" id="recipeGrid">
+    <!-- بخش مقالات -->
+    <h2 class="section-title">دانستنی‌های شکلات</h2>
+    <div class="grid">
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=60" alt="Recipe">
-            <div class="card-content">
-                <h3>تمپر کردن شکلات</h3>
-                <p>آموزش اصولی تمپر کردن شکلات کلبوت برای براقیت نهایی...</p>
-                <small>⏱ ۵ دقیقه مطالعه</small>
+            <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400" alt="Article">
+            <div class="card-body">
+                <h3>چرا شکلات کلبوت؟</h3>
+                <p class="article-body">شکلات کالبوت (Callebaut) به دلیل استفاده از دانه‌های کاکائو با کیفیت پایدار و کره کاکائو خالص، استاندارد طلایی قنادی در جهان است...</p>
             </div>
         </div>
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=500&q=60" alt="Recipe">
-            <div class="card-content">
-                <h3>گاناش حرفه‌ای</h3>
-                <p>طرز تهیه گاناش با نسبت طلایی برای فیلینگ کیک...</p>
-                <small>🎬 همراه با ویدیو</small>
+            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=400" alt="Recipe">
+            <div class="card-body">
+                <h3>اصول تمپر کردن</h3>
+                <p class="article-body">تمپر کردن یعنی کنترل دمای شکلات برای ایجاد کریستال‌های پایدار. برای کالبوت تلخ، دمای نهایی باید ۳۱ درجه سانتی‌گراد باشد تا براق شود...</p>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal فرم سفارش -->
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 style="color: var(--accent)">ثبت درخواست خرید</h2>
+        <form id="orderForm">
+            <input type="text" id="orderProduct" readonly style="color: var(--gold); font-weight: bold;">
+            <input type="text" id="userName" placeholder="نام و نام خانوادگی" required>
+            <input type="tel" id="userMobile" placeholder="شماره تماس" required>
+            <select id="orderWeight">
+                <option value="1kg">۱ کیلوگرم</option>
+                <option value="2.5kg">۲.۵ کیلوگرم</option>
+                <option value="10kg">۱۰ کیلوگرم (کیسه)</option>
+            </select>
+            <textarea id="orderNotes" placeholder="توضیحات (آدرس یا درخواست مشاوره)"></textarea>
+            <button type="submit" class="buy-btn" id="submitBtn">تأیید و ثبت نهایی</button>
+        </form>
+    </div>
+</div>
+
 <footer>
-    <p>ملیکا جان، برای مدیریت سفارش‌ها و چت با ادمین:</p>
-    <a href="https://ble.ir/ChocolateFarm_Admin" target="_blank" class="bale-btn">ارتباط در بله (کلیک کنید)</a>
-    <br><br>
-    <small onclick="showAdminPrompt()" style="cursor: pointer; color: #444;">پنل مدیریت</small>
-    
-    <div id="adminSection">
-        <h3>پنل مدیریت سفارشات</h3>
-        <p>در حال اتصال به Google Sheets...</p>
-        <button onclick="window.open('https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit', '_blank')" class="tab-btn">باز کردن لیست سفارشات</button>
+    <p>ارتباط مستقیم با مدیریت در اپلیکیشن بله:</p>
+    <a href="https://ble.ir/chocolatefarm_admin" target="_blank" class="bale-link">💬 پیام به chocolatefarm_admin</a>
+    <p style="margin-top: 20px; font-size: 0.8rem; color: #333;" onclick="showAdmin()">ورود مدیریت</p>
+    <div id="adminPanel" style="display:none; margin-top: 20px; background: #1a1a1a; padding: 20px; border-radius: 10px;">
+        <button class="tab-btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1vQyBskYy40_l5SgD_aW6H8aQ5N-FmR9n7Y0eWk0I4i0/edit')">مشاهده لیست سفارشات (Google Sheets)</button>
     </div>
 </footer>
 
 <script>
     const products = [
-        { id: 1, name: "کلبوت تلخ 54.4%", cat: "chocolate", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400" },
-        { id: 2, name: "کلبوت سفید 28%", cat: "chocolate", img: "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400" },
-        { id: 3, name: "پودر کاکائو کارگیل", cat: "raw", img: "https://images.unsplash.com/photo-1599600311303-91595300063c?w=400" }
+        { name: "کلبوت تلخ ۵۴.۴٪", cat: "dark", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400" },
+        { name: "کلبوت تلخ ۷۰٪", cat: "dark", img: "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400" },
+        { name: "کلبوت شیری ۳۳.۶٪", cat: "milk-white", img: "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400" },
+        { name: "کلبوت سفید ۲۸٪", cat: "milk-white", img: "https://images.unsplash.com/photo-1599600311303-91595300063c?w=400" },
+        { name: "کلبوت روبی (صورتی)", cat: "special", img: "https://images.unsplash.com/photo-1565079030399-ea52491a8168?w=400" },
+        { name: "کلبوت گلد (کاراملی)", cat: "special", img: "https://images.unsplash.com/photo-1544480542-1422700389de?w=400" }
     ];
 
     function renderProducts(filter) {
@@ -127,15 +136,24 @@
             if(filter === 'all' || p.cat === filter) {
                 grid.innerHTML += `
                     <div class="card">
-                        <img src="${p.img}" alt="${p.name}">
-                        <div class="card-content">
+                        <img src="${p.img}">
+                        <div class="card-body">
                             <h3>${p.name}</h3>
-                            <button class="tab-btn" onclick="alert('فرم سفارش در پایین صفحه فعال است')">جزئیات و خرید</button>
+                            <button class="buy-btn" onclick="openModal('${p.name}')">ثبت سفارش / استعلام قیمت</button>
                         </div>
                     </div>
                 `;
             }
         });
+    }
+
+    function openModal(name) {
+        document.getElementById('orderProduct').value = name;
+        document.getElementById('orderModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('orderModal').style.display = "none";
     }
 
     function filterItems(cat) {
@@ -144,15 +162,24 @@
         renderProducts(cat);
     }
 
-    function showAdminPrompt() {
-        const pass = prompt("رمز ورود مدیر را وارد کنید:");
-        if(pass === "1234") { // رمز موقت شما
-            document.getElementById('adminSection').style.display = 'block';
-            window.scrollTo(0, document.body.scrollHeight);
-        } else {
-            alert("رمز اشتباه است.");
+    function showAdmin() {
+        if(prompt("رمز مدیر:") === "1370") {
+            document.getElementById('adminPanel').style.display = "block";
         }
     }
+
+    // ثبت فرم (اتصال به Apps Script شما)
+    document.getElementById('orderForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true; btn.textContent = "در حال ارسال...";
+        
+        // در اینجا کد Fetch شما به API گوگل اسکریپت قرار می‌گیرد
+        alert("ملیکا جان، درخواست برای " + document.getElementById('orderProduct').value + " ثبت شد. (اتصال به شیت در مرحله بعد نهایی می‌شود)");
+        
+        btn.disabled = false; btn.textContent = "تأیید و ثبت نهایی";
+        closeModal();
+    };
 
     renderProducts('all');
 </script>
