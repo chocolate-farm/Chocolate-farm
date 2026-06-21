@@ -1,167 +1,386 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدیریت مزرعه شکلات</title>
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-    <style>
-        :root { --primary: #8E6E53; --accent: #B87333; --dark: #121212; --card: #1E1E1E; --gold: #D4AF37; }
-        body { font-family: 'Vazirmatn', sans-serif; background-color: var(--dark); color: #e0e0e0; margin: 0; }
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        
-        /* Header & Hero */
-        header { text-align: center; padding: 50px 0; border-bottom: 2px solid var(--accent); background: linear-gradient(to bottom, #1a1a1a, var(--dark)); }
-        .hero-title { color: var(--accent); font-size: 2.5rem; margin: 0; }
-        
-        /* Product Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
-        .card { background: var(--card); border-radius: 15px; border: 1px solid #333; overflow: hidden; transition: 0.3s; position: relative; }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card img { width: 100%; height: 150px; object-fit: cover; opacity: 0.7; }
-        .card-content { padding: 15px; text-align: center; }
-        .buy-btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مزرعه شکلات</title>
 
-        /* Modal */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
-        .modal-content { background: #252525; margin: 10% auto; padding: 30px; width: 90%; max-width: 450px; border-radius: 20px; border: 1px solid var(--accent); }
-        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #121212; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box; }
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 
-        /* Admin Panel Section */
-        #adminDashboard { display: none; background: #1a1a1a; padding: 20px; border-radius: 15px; margin-top: 50px; border: 1px solid var(--primary); }
-        .admin-stat { display: flex; justify-content: space-around; margin-bottom: 20px; }
-        .stat-box { background: #252525; padding: 15px; border-radius: 10px; text-align: center; flex: 1; margin: 0 5px; border-bottom: 3px solid var(--gold); }
-        
-        footer { text-align: center; padding: 40px; margin-top: 50px; color: #555; }
-        .bale-link { color: #0088cc; text-decoration: none; font-weight: bold; }
-    </style>
+<style>
+
+:root{
+--primary:#8E6E53;
+--accent:#B87333;
+--dark:#121212;
+--card:#1E1E1E;
+--gold:#D4AF37;
+}
+
+body{
+font-family:'Vazirmatn',sans-serif;
+background-color:var(--dark);
+color:#e0e0e0;
+margin:0;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+/* header */
+
+header{
+text-align:center;
+padding:50px 0;
+border-bottom:2px solid var(--accent);
+background:linear-gradient(to bottom,#1a1a1a,var(--dark));
+}
+
+.hero-title{
+color:var(--accent);
+font-size:2.5rem;
+margin:0;
+}
+
+/* products */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.card{
+background:var(--card);
+border-radius:15px;
+border:1px solid #333;
+overflow:hidden;
+transition:.3s;
+position:relative;
+}
+
+.card:hover{
+border-color:var(--accent);
+transform:translateY(-5px);
+}
+
+.card img{
+width:100%;
+height:150px;
+object-fit:cover;
+opacity:.7;
+}
+
+.card-content{
+padding:15px;
+text-align:center;
+}
+
+.buy-btn{
+background:var(--accent);
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+font-weight:bold;
+}
+
+/* modal */
+
+.modal{
+display:none;
+position:fixed;
+z-index:1000;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(5px);
+}
+
+.modal-content{
+background:#252525;
+margin:10% auto;
+padding:30px;
+width:90%;
+max-width:450px;
+border-radius:20px;
+border:1px solid var(--accent);
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+background:#121212;
+border:1px solid #444;
+color:white;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+/* admin */
+
+#adminDashboard{
+display:none;
+background:#1a1a1a;
+padding:20px;
+border-radius:15px;
+margin-top:50px;
+border:1px solid var(--primary);
+}
+
+.admin-stat{
+display:flex;
+justify-content:space-around;
+margin-bottom:20px;
+}
+
+.stat-box{
+background:#252525;
+padding:15px;
+border-radius:10px;
+text-align:center;
+flex:1;
+margin:0 5px;
+border-bottom:3px solid var(--gold);
+}
+
+footer{
+text-align:center;
+padding:40px;
+margin-top:50px;
+color:#555;
+}
+
+.bale-link{
+color:#0088cc;
+text-decoration:none;
+font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
 
 <header>
-    <h1 class="hero-title">مزرعه شکلات</h1>
-    <p>تأمین‌کننده رسمی کالبوت بلژیک | ملیکا</p>
+<h1 class="hero-title">مزرعه شکلات</h1>
+<p>تأمین‌کننده رسمی کالبوت بلژیک | ملیکا</p>
 </header>
 
 <div class="container">
-    <div class="grid" id="productGrid">
-        <!-- محصولات -->
-    </div>
 
-    <!-- بخش مقالات و رسپی -->
-    <div style="margin-top: 60px;">
-        <h2 style="color: var(--accent)">💡 مجله تخصصی مزرعه</h2>
-        <div class="grid">
-            <div class="card" style="height: auto; padding: 15px;">
-                <h3 style="color: var(--gold)">تکنیک تمپرینگ</h3>
-                <p style="font-size: 0.9rem; color: #aaa;">برای اینکه شکلات شما بعد از خشک شدن براق باشد و زیر دندان صدا بدهد، باید آن را تمپر کنید. دمای ایده‌آل برای کالبوت تلخ ۵۴٪ ردیف ۳۱ درجه است...</p>
-            </div>
-            <div class="card" style="height: auto; padding: 15px;">
-                <h3 style="color: var(--gold)">نگهداری اصولی</h3>
-                <p style="font-size: 0.9rem; color: #aaa;">شکلات را هرگز در یخچال نگذارید! بهترین دما ۱۸ تا ۲۰ درجه و دور از تابش مستقیم آفتاب است تا پدیده "شکوفه زدن" رخ ندهد.</p>
-            </div>
-        </div>
-    </div>
+<div class="grid" id="productGrid"></div>
+
+<div style="margin-top:60px">
+
+<h2 style="color:var(--accent)">💡 مجله تخصصی مزرعه</h2>
+
+<div class="grid">
+
+<div class="card" style="height:auto;padding:15px">
+<h3 style="color:var(--gold)">تکنیک تمپرینگ</h3>
+<p style="font-size:.9rem;color:#aaa">
+برای اینکه شکلات شما بعد از خشک شدن براق باشد باید آن را تمپر کنید.
+دمای ایده‌آل برای کالبوت تلخ ۵۴٪ حدود ۳۱ درجه است.
+</p>
 </div>
 
-<!-- Modal -->
+<div class="card" style="height:auto;padding:15px">
+<h3 style="color:var(--gold)">نگهداری اصولی</h3>
+<p style="font-size:.9rem;color:#aaa">
+شکلات را در یخچال نگذارید.
+دمای مناسب ۱۸ تا ۲۰ درجه است و باید دور از نور مستقیم آفتاب باشد.
+</p>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<!-- modal -->
+
 <div id="orderModal" class="modal">
-    <div class="modal-content">
-        <h2 style="color: var(--accent); margin-top: 0;">ثبت سفارش</h2>
-        <form id="orderForm">
-            <input type="text" id="pName" readonly style="border: none; background: transparent; color: var(--gold); font-size: 1.2rem; padding: 0;">
-            <input type="text" id="cName" placeholder="نام شما" required>
-            <input type="tel" id="cMobile" placeholder="شماره تماس (بله/تلگرام)" required>
-            <select id="pWeight">
-                <option value="1kg">۱ کیلوگرم</option>
-                <option value="2.5kg">۲.۵ کیلوگرم (بسته اصلی)</option>
-                <option value="10kg">۱۰ کیلوگرم (کیسه)</option>
-            </select>
-            <textarea id="cNotes" placeholder="آدرس یا توضیحات خاص..."></textarea>
-            <button type="submit" class="buy-btn" id="subBtn">ارسال درخواست خرید</button>
-            <button type="button" onclick="closeModal()" style="background:none; border:none; color:#777; width:100%; margin-top:10px; cursor:pointer;">انصراف</button>
-        </form>
-    </div>
+
+<div class="modal-content">
+
+<h2 style="color:var(--accent);margin-top:0">ثبت سفارش</h2>
+
+<form id="orderForm">
+
+<input type="text" id="pName" readonly style="border:none;background:transparent;color:var(--gold);font-size:1.2rem">
+
+<input type="text" id="cName" placeholder="نام شما" required>
+
+<input type="tel" id="cMobile" placeholder="شماره تماس (بله/تلگرام)" required>
+
+<select id="pWeight">
+<option value="1kg">۱ کیلوگرم</option>
+<option value="2.5kg">۲.۵ کیلوگرم</option>
+<option value="10kg">۱۰ کیلوگرم</option>
+</select>
+
+<textarea id="cNotes" placeholder="آدرس یا توضیحات"></textarea>
+
+<button type="submit" class="buy-btn" id="subBtn">ارسال درخواست خرید</button>
+
+<button type="button" onclick="closeModal()" style="background:none;border:none;color:#777;width:100%;margin-top:10px">انصراف</button>
+
+</form>
+</div>
 </div>
 
 <footer>
-    <p>ارتباط با ادمین در بله: <a href="https://ble.ir/chocolatefarm_admin" class="bale-link">chocolatefarm_admin@</a></p>
-    <p onclick="openAdmin()" style="cursor:pointer; font-size: 0.7rem;">پنل مدیریت</p>
-    
-    <div id="adminDashboard" class="container">
-        <h2 style="color: var(--gold)">داشبورد مدیریت ملیکا</h2>
-        <div class="admin-stat">
-            <div class="stat-box"><h4>وضعیت اتصال</h4><p style="color: #4CAF50;">فعال</p></div>
-            <div class="stat-box"><h4>دیتابیس</h4><p>گوگل شیت</p></div>
-        </div>
-        <button class="buy-btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1-u1O-DhHg_hfB6YI9fHXt8a0DcWRCjS4vy4UeLlY3jA/edit?gid=1067858568#gid=1067858568/edit')">📂 باز کردن لیست سفارشات در شیت</button>
-    </div>
+
+<p>
+ارتباط با ادمین در بله
+<a href="https://ble.ir/chocolatefarm_admin" class="bale-link">
+chocolatefarm_admin@
+</a>
+</p>
+
+<p onclick="openAdmin()" style="cursor:pointer;font-size:.7rem">
+پنل مدیریت
+</p>
+
+<div id="adminDashboard" class="container">
+
+<h2 style="color:var(--gold)">
+داشبورد مدیریت ملیکا
+</h2>
+
+<div class="admin-stat">
+
+<div class="stat-box">
+<h4>وضعیت اتصال</h4>
+<p style="color:#4CAF50">فعال</p>
+</div>
+
+<div class="stat-box">
+<h4>دیتابیس</h4>
+<p>Google Sheets</p>
+</div>
+
+</div>
+
+<button class="buy-btn"
+onclick="window.open('https://docs.google.com/spreadsheets/d/1-u1O-DhHg_hfB6YI9fHXt8a0DcWRCjS4vy4UeLlY3jA')">
+📂 مشاهده سفارش‌ها
+</button>
+
+</div>
+
 </footer>
 
 <script>
-    // آدرس وب‌اپ گوگل شما (که در گام دوم کپی کردی)
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby-IgiMnf6M6ITpe1JPFv0TJYdw1ovygLnSYGbHD7_aO2TCM09BvKkwR0DI9fZ9fmnh-A/exec
-"; 
 
-    const products = [
-        { name: "کالبوت تلخ ۵۴.۴٪", img: "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400" },
-        { name: "کالبوت شیرین ۳۳.۶٪", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400" },
-        { name: "کالبوت سفید ۲۸٪", img: "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400" },
-        { name: "کالبوت روبی (صورتی)", img: "https://images.unsplash.com/photo-1565079030399-ea52491a8168?w=400" }
-    ];
+const ADMIN_KEY="1771";
 
-    const grid = document.getElementById('productGrid');
-    products.forEach(p => {
-        grid.innerHTML += `<div class="card">
-            <img src="${p.img}">
-            <div class="card-content">
-                <h3>${p.name}</h3>
-                <button class="buy-btn" onclick="openModal('${p.name}')">ثبت سفارش</button>
-            </div>
-        </div>`;
-    });
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycby-IgiMnf6M6ITpe1JPFv0TJYdw1ovygLnSYGbHD7_aO2TCM09BvKkwR0DI9fZ9fmnh-A/exec";
 
-    function openModal(name) {
-        document.getElementById('pName').value = name;
-        document.getElementById('orderModal').style.display = "block";
-    }
+const products=[
+{name:"کالبوت تلخ ۵۴٪",img:"https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400"},
+{name:"کالبوت شیری ۳۳٪",img:"https://images.unsplash.com/photo-1511381939415-e44015466834?w=400"},
+{name:"کالبوت سفید",img:"https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400"},
+{name:"کالبوت روبی",img:"https://images.unsplash.com/photo-1565079030399-ea52491a8168?w=400"}
+];
 
-    function closeModal() { document.getElementById('orderModal').style.display = "none"; }
+const grid=document.getElementById("productGrid");
 
-    document.getElementById('orderForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const btn = document.getElementById('subBtn');
-        btn.disabled = true; btn.innerText = "در حال ثبت...";
+products.forEach(p=>{
+grid.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<div class="card-content">
+<h3>${p.name}</h3>
+<button class="buy-btn" onclick="openModal('${p.name}')">ثبت سفارش</button>
+</div>
+</div>
+`;
+});
 
-        const payload = {
-            name: document.getElementById('cName').value,
-            mobile: document.getElementById('cMobile').value,
-            product: document.getElementById('pName').value,
-            weight: document.getElementById('pWeight').value,
-            notes: document.getElementById('cNotes').value
-        };
+function openModal(name){
+document.getElementById("pName").value=name;
+document.getElementById("orderModal").style.display="block";
+}
 
-        try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors', // برای امنیت مرورگر
-                body: JSON.stringify(payload)
-            });
-            alert("ملیکا جان، سفارش با موفقیت در شیت شما ثبت شد!");
-            closeModal();
-            document.getElementById('orderForm').reset();
-        } catch (e) {
-            alert("خطا در اتصال! لطفاً اینترنت را بررسی کنید.");
-        }
-        btn.disabled = false; btn.innerText = "ارسال درخواست خرید";
-    };
+function closeModal(){
+document.getElementById("orderModal").style.display="none";
+}
 
-    function openAdmin() {
-        if(prompt("رمز عبور مدیریت:") === "1771") {
-            document.getElementById('adminDashboard').style.display = "block";
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    }
+document.getElementById("orderForm").onsubmit=async(e)=>{
+
+e.preventDefault();
+
+const btn=document.getElementById("subBtn");
+btn.disabled=true;
+btn.innerText="در حال ارسال...";
+
+const payload={
+name:document.getElementById("cName").value,
+mobile:document.getElementById("cMobile").value,
+product:document.getElementById("pName").value,
+weight:document.getElementById("pWeight").value,
+notes:document.getElementById("cNotes").value
+};
+
+try{
+
+await fetch(SCRIPT_URL,{
+method:"POST",
+mode:"no-cors",
+body:JSON.stringify(payload)
+});
+
+alert("✅ سفارش ثبت شد");
+
+closeModal();
+
+document.getElementById("orderForm").reset();
+
+}catch(err){
+
+alert("خطا در اتصال");
+
+}
+
+btn.disabled=false;
+btn.innerText="ارسال درخواست خرید";
+
+};
+
+function openAdmin(){
+
+if(prompt("رمز مدیریت")===ADMIN_KEY){
+
+document.getElementById("adminDashboard").style.display="block";
+
+window.scrollTo(0,document.body.scrollHeight);
+
+}
+
+}
+
+/* admin url access */
+
+const params=new URLSearchParams(window.location.search);
+
+if(params.get("admin")===ADMIN_KEY){
+
+document.getElementById("adminDashboard").style.display="block";
+
+}
+
 </script>
+
 </body>
 </html>
